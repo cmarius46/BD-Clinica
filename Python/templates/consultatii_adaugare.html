@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DRIC-consultatii</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+      <!-- pentru search button -->
+
+
+    <!--    restrictii generale pentru aspectul paginii -->
+    <style>
+        body {
+            background-color: powderblue;
+            text-align: center;
+            font-family: "Lucida Console", "Courier New", monospace;
+        }
+        input, select {
+            font-family: "Lucida Console", "Courier New", monospace;
+            text-align: center;
+            width: 350px;
+            height: 50px;
+            font-size: 25px;
+        }
+        label {
+            font-size: 25px;
+        }
+        .title {
+            margin-bottom: 30px;
+            font-size: 35px;
+        }
+        .icon {
+            margin-top: 50px;
+            width: 75px;
+            height: 50px;
+            text-align: center;
+            font-size: 35px;
+            margin-bottom: 35px;
+        }
+        .send-icon {
+            width: 45px;
+            height: 45px;
+            font-size: 25px;
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .number-input {
+            width: 100px;
+
+        }
+    </style>
+
+</head>
+<body>
+
+<!--buton de home-->
+    <div>
+      <a href="/meniu">
+          <button class="fa fa-home icon"></button>
+      </a>
+    </div>
+
+<!--titlu-->
+    <div class="title">
+        <p>
+            Adauga o consultatie
+        </p>
+    </div>
+
+<!--formular de adaugare a unei consultatii-->
+    <div>
+        <form action="/consultatii/adaugare" method="post">
+            <label for="Pacient">Nume si prenume pacient</label>
+            <select name="Pacient">
+                {% for p in pacienti %}
+                <option>{{p.nume}} {{p.prenume}}</option>
+                {% endfor %}
+            </select>
+            <br>
+            <br>
+            <label for="Doctor">Nume si prenume doctor</label>
+            <select name="Doctor">
+                {% for d in doctori %}
+                <option>{{d.nume}} {{d.prenume}}</option>
+                {% endfor %}
+            </select>
+            <br>
+            <br>
+            <label for="durata">Durata consultatie</label>
+            <input type="number" class="number-input" name="durata" min="1" required> minute
+            <br>
+            <br>
+            <label for="data">Data</label>
+            <input type="date" name="data" required>
+            <br>
+            <br>
+<!--            <label for="detaliiConsultatie">Observatii consultatie</label>-->
+            <input type="text" name="detaliiConsultatie" placeholder="Observatii consultatie" required>
+            <br>
+            <br>
+<!--            <label for="detaliiPrescriptie">Detalii Prescriptie</label>-->
+            <input type="text" name="detaliiPrescriptie" placeholder="Detalii prescriptie" required>
+            <br>
+            <br>
+            <label for="durataPrescriptie">Durata prescriptie</label>
+            <input type="number" class="number-input" name="durataPrescriptie" min="0" required> zile
+            <br>
+            <br>
+            <label for="medicamenteOferite">Medicamente oferite: </label>
+            <br>
+            <select name="med1">
+                <option>-</option>
+                {% for med in medicamente %}
+                <option>{{med.nume}}</option>
+                {% endfor %}
+            </select>
+            <br>
+            <select name="med2">
+                <option>-</option>
+                {% for med in medicamente %}
+                <option>{{med.nume}}</option>
+                {% endfor %}
+            </select>
+            <br>
+            <select name="med3">
+                <option>-</option>
+                {% for med in medicamente %}
+                <option>{{med.nume}}</option>
+                {% endfor %}
+            </select>
+
+            <br>
+            <br>
+
+            <button type="submit" class="fa fa-paper-plane send-icon"></button>
+
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DRIC - Medicamente</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+      <!-- pentru search button -->
+
+<!--    restrictii generale pentru aspectul paginii -->
+    <style>
+
+        body {
+            background-color: powderblue;
+            text-align: center;
+            font-family: "Lucida Console", "Courier New", monospace;
+        }
+        input {
+            text-align: center;
+            font-family: "Lucida Console", "Courier New", monospace;
+        }
+        .medicament .detalii {
+            background-color: cadetblue !important;
+            color: yellow;
+            display: inline-block;
+        }
+        .det {
+            display: inline-block;
+        }
+        .medicament {
+            border-radius: 75px;
+            line-height: 1.5;
+            display: block;
+            background-color: aliceblue;
+            width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        button {
+            border-radius: 10px;
+            font-family: "Lucida Console", "Courier New", monospace;
+        }
+
+        .icon {
+            margin-top: 50px;
+            width: 75px;
+            height: 50px;
+            text-align: center;
+            font-size: 35px;
+            margin-bottom: 35px;
+        }
+
+    </style>
+
+</head>
+<body>
+
+    <!--butonul de home-->
+    <div>
+      <a href="/meniu">
+          <button class="fa fa-home icon" ></button>
+      </a>
+    </div>
+
+
+<!--    trimitere catre meniul "Adaugare"-->
+    <div style="text-align: center;">
+        <a href = "/medicamente/adaugare">
+            <button style="width: 350px; height: 35px; font-size: 25px;">Adauga un medicament</button>
+        </a>
+    </div>
+
+    <br>
+
+<!--    posibilitatea de activare a butonului de stergere-->
+    <div style="text-align:center;">
+      <form action='/medicamente' id="toggleStergere" method="post">
+          <input name="toggleStergere" value="toggleStergere" type="hidden">
+          <label for="delete">Se permite stergerea ?</label>
+          <select name="delete">
+            <option>
+                {% if canDelete == 1 %}
+                    DA
+                {% else %}
+                    NU
+                {% endif %}
+            </option>
+            <option>
+                {% if canDelete == 1 %}
+                    NU
+                {% else %}
+                    DA
+                {% endif %}
+            </option>
+          </select>
+          <button type="submit" class="fa fa-eraser" style="width: 50px; height: 50px;">
+          </button>
+      </form>
+    </div>
+
+    <br>
+
+<!--    text-->
+    <div style="text-align: center">
+      <h1 style="margin: 10px, auto;">
+          Lista medicamentelor disponibile este :
+      </h1>
+    </div>
+
+<!--    bara de cautare dupa text-->
+    <div style="text-align:center;">
+      <form action='/medicamente' id="searchDoctor" method="post">
+          <input id="searchBar" name="searchText" type="text" placeholder="Search.." style="width: 500px; height: 50px; font-size: 25px; display: inline-block; border-radius: 15px;">
+          <button type="submit" class="fa fa-search" style="width: 50px; height: 50px;">
+          </button>
+      </form>
+    </div>
+
+    <br>
+
+<!--    bara de cautare dupa numarul de aparitii-->
+  <div style="text-align:center;">
+      <form action='/medicamente' id="searchData" method="post">
+          <label for="searchData">Cauta dupa numarul de aparitii : </label>
+          <input required name="searchData" min="0" max="9999" type="number" placeholder="Search.." style=" border-radius: 15px; width: 150px; height: 25px; font-size: 15px; display: inline-block;">
+          <button type="submit" class="fa fa-paper-plane" style="width: 35px; height: 35px;">
+          </button>
+      </form>
+    </div>
+
+<!--    detalii despre medicamente-->
+    <div style="text-align: center">
+        <ul>
+        <li>
+        {% for val in data %}
+
+<!--    detaliile despre fiecare medicament in parte-->
+        <div class="medicament" id="cont">
+            <p>
+<!--            detalii generale-->
+                <div class="det">Nume medicament: </div> <div class="detalii">{{val.nume}} </div>
+                <br>
+                <div class="det">Producator medicament: </div> <div class="detalii">{{val.producator}} </div>
+                <br>
+                <div class="det">Substanta activa: </div> <div class="detalii">{{val.substantaActiva}} </div>
+                <br>
+                <div class="det">Numarul de aparitii in prescriptii: </div> <div class="detalii">{{val.numarAparitii}} </div>
+                <br>
+
+<!--            disponibilitatea-->
+                {% if val.disponibil %}
+                        <p style="display: inline-block;"> Disponibil:</p>
+                        <div style="vertical-align: middle; background-color: green; height: 25px; width: 25px; display: inline-block"></div>
+                        <div style="display: inline-block">
+                            <form action='/medicamente' method="post">
+                                 <input type="hidden" name="schimbaDisponibilitatea" value="{{val.id}}">
+                                <button type="submit" class="fa fa-superpowers" style="width: 30px; height: 30px;"></button>
+                            </form>
+                        </div>
+
+
+                {% else %}
+                    <div >
+                        <p style="display: inline-block;"> Disponibil:</p>
+                        <div style="vertical-align: middle; background-color: red; height: 25px; width: 25px; display: inline-block"></div>
+                        <div style="display: inline-block">
+                            <form action='/medicamente' method="post">
+                                 <input type="hidden" name="schimbaDisponibilitatea" value="{{val.id}}">
+                                <button type="submit" class="fa fa-superpowers" style="width: 30px; height: 30px;"></button>
+                            </form>
+                        </div>
+
+                    </div>
+                {% endif %}
+
+                <br>
+<!--            optiunea de stergere-->
+                {% if canDelete == 1 %}
+                    <div style="display: inline-block;">
+                        <p style="display: inline-block;">
+                            Stergere medicament
+                        </p>
+                        <form action='/medicamente' name="deleteMedicament" method="post"  style="display: inline-block;">
+                            <input name="idMedicament" type="hidden" value="{{val.id}}">
+                            <button type="submit" class="fa fa-trash-o" style="width: 50px; height: 50px;">
+                            </button>
+                        </form>
+                    </div>
+                {% endif %}
+
+            </p>
+        </div>
+
+
+
+        {% endfor %}
+        </li>
+
+        </ul>
+    </div>
+</body>
+</html>

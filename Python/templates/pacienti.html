@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DRIC - Pacienti</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+      <!-- pentru search button -->
+<!--    restrictii generale pentru aspectul paginii -->
+    <style>
+        body {
+            background-color: powderblue;
+            text-align: center;
+            font-family: "Lucida Console", "Courier New", monospace;
+        }
+        input {
+            text-align: center;
+            font-family: "Lucida Console", "Courier New", monospace;
+        }
+        .pacient .detalii {
+            background-color: cadetblue !important;
+            color: yellow;
+            display: inline-block;
+        }
+        .det {
+            display: inline-block;
+        }
+        .pacient {
+            border-radius: 75px;
+            line-height: 1.5;
+            display: block;
+            background-color: aliceblue;
+            width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        button {
+            border-radius: 10px;
+            font-size: 25px;
+            font-family: "Lucida Console", "Courier New", monospace;
+        }
+
+         .icon {
+            margin-top: 50px;
+            width: 75px;
+            height: 50px;
+            text-align: center;
+            font-size: 35px;
+            margin-bottom: 35px;
+        }
+
+    </style>
+</head>
+<body>
+
+<!--butonul de home-->
+    <div>
+      <a href="/meniu">
+          <button class="fa fa-home icon"></button>
+      </a>
+    </div>
+
+
+<!--trimitere catre meniul de adaugare-->
+    <div style="text-align: center;">
+        <a href = "/pacienti/adaugare">
+            <button style="width: 300px; height: 35px;">Adauga un pacient</button>
+        </a>
+    </div>
+
+    <br>
+
+<!--optiunea de stergere-->
+    <div style="text-align:center;">
+      <form action='/pacienti' id="toggleStergere" method="post">
+          <input name="toggleStergere" value="toggleStergere" type="hidden">
+          <label for="delete">Se permite stergerea ?</label>
+          <select name="delete">
+            <option>
+                {% if canDelete == 1 %}
+                    DA
+                {% else %}
+                    NU
+                {% endif %}
+            </option>
+            <option>
+                {% if canDelete == 1 %}
+                    NU
+                {% else %}
+                    DA
+                {% endif %}
+            </option>
+          </select>
+          <button type="submit" class="fa fa-eraser" style="width: 50px; height: 50px;">
+          </button>
+      </form>
+    </div>
+
+<!--text-->
+    <div style="text-align: center">
+      <h1 style="margin: 10px, auto;">
+          Lista pacienti :
+      </h1>
+    </div>
+
+<!--bara de cautare dupa text-->
+    <div style="text-align:center;">
+      <form action='/pacienti' id="searchDoctor" method="post">
+          <input name="searchText" type="text" placeholder="Search.." style="width: 500px; height: 50px; font-size: 25px; display: inline-block; border-radius: 15px;">
+          <button type="submit" class="fa fa-search" style="width: 50px; height: 50px;">
+          </button>
+      </form>
+    </div>
+
+<!--bara de cautare dupa numarul de doctori-->
+    <div>
+        <div style="text-align:center;">
+      <form action='/pacienti' id="searchData" method="post">
+          <label for="searchData">Cauta dupa numarul de doctori : </label>
+          <input required name="searchData" min="0" max="99" type="number" placeholder="Search.." style=" border-radius: 15px; width: 150px; height: 25px; font-size: 15px; display: inline-block;">
+          <button type="submit" class="fa fa-paper-plane" style="width: 35px; height: 35px;">
+          </button>
+      </form>
+    </div>
+    </div>
+
+<!--detalii despre pacienti-->
+    <div style="text-align: center">
+        <ul>
+        <li>
+        {% for val in data %}
+
+<!--    detalii despre fiecare pacient in parte-->
+        <div class="pacient" id="cont">
+            <p>
+<!--            detalii generale-->
+                <div class="det">Nume pacient:</div> <div class="detalii">{{val.nume}}</div>
+                <br>
+                <div class="det">Prenume pacient:</div> <div class="detalii"> {{val.prenume}} </div>
+                <br>
+                <div class="det">Numarul de doctori care l-au tratat:</div> <div class="detalii">{{val.nrDoctori}} </div>
+                <br>
+                <br>
+                {% if val.nrDoctori != 0 %}
+                <div class="det">Doctorii care l-au tratat: </div>
+
+                <ul>
+                    <li>
+                        {% for doc in doctorData[val.id-1] %}
+                        <p>
+                            <div class="detalii">{{doc.prenume}} {{doc.nume}}</div>
+                            <br>
+                        </p>
+                        {% endfor %}
+                    </li>
+                </ul>
+
+                {% endif %}
+
+<!--            meniul de stergere-->
+                {% if canDelete == 1 %}
+                    <div style="display: inline-block;">
+                        <p style="display: inline-block;">
+                            Stergere pacient
+                        </p>
+                        <form style="display: inline-block;" action='/pacienti' name="deletePacient" method="post">
+                            <input name="idPacient" type="hidden" value="{{val.id}}">
+                            <button type="submit" class="fa fa-trash-o" style="width: 50px; height: 50px;">
+                            </button>
+                        </form>
+                    </div>
+                {% endif %}
+
+            </p>
+        </div>
+
+
+        <br>
+        {% endfor %}
+        </li>
+        <br>
+        </ul>
+    </div>
+    <br>
+</body>
+</html>

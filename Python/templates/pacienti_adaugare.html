@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DRIC - Pacienti</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+      <!-- pentru search button -->
+
+    <!--    restrictii generale pentru aspectul paginii -->
+    <style>
+        body {
+            background-color: powderblue;
+            text-align: center;
+            font-family: "Lucida Console", "Courier New", monospace;
+        }
+        input {
+            border-radius: 15px;
+            font-family: "Lucida Console", "Courier New", monospace;
+            text-align: center;
+            width: 350px;
+            height: 50px;
+            font-size: 25px;
+        }
+        label {
+            font-size: 25px;
+        }
+        .title {
+            margin-bottom: 30px;
+            font-size: 35px;
+        }
+        .icon {
+            margin-top: 50px;
+            width: 75px;
+            height: 50px;
+            text-align: center;
+            font-size: 35px;
+            margin-bottom: 35px;
+        }
+        .send-icon {
+            width: 45px;
+            height: 45px;
+            font-size: 25px;
+            text-align: center;
+        }
+    </style>
+
+</head>
+<body>
+
+<!--buton de home-->
+    <div>
+      <a href="/meniu">
+          <button class="fa fa-home icon"></button>
+      </a>
+    </div>
+
+<!--titlu-->
+    <div class="title">
+        <p>
+            Adauga un pacient
+        </p>
+    </div>
+
+
+<!--formular de adaugare pentru un pacient-->
+    <div>
+        <form action="/pacienti/adaugare" method="post">
+            <input type="text" name="numePacient" placeholder="Nume" required>
+            <br>
+            <br>
+            <input type="text" name="prenumePacient" placeholder="Prenume" required>
+            <br>
+            <br>
+            <button type="submit" class="fa fa-paper-plane send-icon"></button>
+        </form>
+    </div>
+
+</body>
+</html>

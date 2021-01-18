@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DRIC - Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+      <!-- pentru search button -->
+
+    <!--    restrictii generale pentru aspectul paginii -->
+    <style>
+        body {
+            background-color: powderblue;
+            text-align: center;
+            font-family: "Lucida Console", "Courier New", monospace;
+        }
+        input {
+            text-align: center;
+            font-family: "Lucida Console", "Courier New", monospace;
+            height: 35px;
+            width: 195px;
+            font-size: 20px;
+            border-radius: 15px;
+        }
+
+        h1{
+            margin: 10px, auto;
+            margin-top: 150px;
+            font-size: 75px;
+        }
+
+        form {
+            font-size: 35px;
+        }
+
+        p {
+            font-size: 25px;
+            color: red;
+        }
+
+    </style>
+
+</head>
+<body>
+
+<!--text-->
+    <div style="text-align: center">
+      <h1>
+          Login
+      </h1>
+    </div>
+
+<!--spatiul de introducere a parolei-->
+    <div>
+        <form action="/" id="login" method="POST">
+            <label for="loginField">Introduceti parola de acces : </label>
+            <br>
+            <br>
+            <input type="password" name="parola" id="loginField" placeholder="Parola..." minlength="0" maxlength="10">
+            <button type="submit" class="fa fa-paper-plane" style="width: 50px; height: 50px; vertical-align: middle;">
+            </button>
+        </form>
+    </div>
+
+<!--mesaj "Parola gresita"-->
+    {% if parolaGresita == 1 %}
+    <br>
+    <div>
+        <p>
+            Parola introdusa este gresita.
+        </p>
+    </div>
+
+    {% endif %}
+</body>
+</html>

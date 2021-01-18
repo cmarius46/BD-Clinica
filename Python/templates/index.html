@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Consultatii</title>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    <link rel="stylesheet" href="static/css/styles.css">
+  </head>
+
+<!--  document schita pentru proiect-->
+  <body>
+    <div class="main-block">
+      <h1>Consultatii</h1>
+      <form action="/data">
+        <div class="info">
+		  <input type="text" id="test1" name="name" placeholder="Nume Pacient">
+          <input type="text" name="name" placeholder="Prenume Pacient">
+          <input type="number" id="dur" name="name" placeholder="Durata">
+		  <label for="dur">(minute)</label>
+          <input type="datetime-local" name="name" placeholder="Phone number">
+		  <input class="fname" type="text" name="name" placeholder="Detalii Consultatie">
+          <input type="text" name="name" placeholder="Nume Doctor">
+          <input type="text" name="name" placeholder="Prenume Doctor">
+          <input class="fname" id="med" type="text" name="name" placeholder="Lista medicamente">
+        </div>
+        <a href="doctori">
+          <button type="button" id="sendBtn" >Submit data</button> <!--onclick="alert('Hello world!')"-->
+        </a>
+      </form>
+    </div>
+  </body>
+</html>
